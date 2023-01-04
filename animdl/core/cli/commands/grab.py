@@ -40,4 +40,9 @@ def animdl_grab(query, index, **kwargs):
         client, anime.get("anime_url"), check=kwargs.get("range")
     ):
         stream_url = list(helpers.ensure_extraction(client, stream_url_caller))
-        click.echo(json.dumps({"episode": episode, "streams": stream_url}))
+        try:
+            title = anime.get("name")
+        except Exception as e:
+            title = ''
+            console.print("Anime has no title - Error: '%s'." % (e))
+        click.echo(json.dumps({"title": title, "episode": episode, "streams": stream_url}))
